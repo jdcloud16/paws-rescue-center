@@ -1,0 +1,28 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Flask configuration and local data
+.env
+.flaskenv
+instance/
+
+# Testing and coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Linting and type-checking caches
+.ruff_cache/
+.mypy_cache/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
