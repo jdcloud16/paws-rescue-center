@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Paws Rescue Center{% endblock %}</title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}"
+    >
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <header class="site-header">
+        <nav class="site-nav">
+            <a class="site-logo" href="{{ url_for('main.homepage') }}">
+                Paws Rescue Center
+            </a>
+
+            <ul class="nav-links">
+                <li>
+                    <a href="{{ url_for('main.homepage') }}">Home</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('main.pets_page') }}">Available Pets</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('main.about_page') }}">About</a>
+                </li>
+                <li>
+                    <a href="{{ url_for('main.contact_page') }}">Contact</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="site-main">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Paws Rescue Center. All rights reserved.</p>
+    </footer>
+</body>
+</html>
