@@ -1,13 +1,20 @@
+import os
+
 from flask import Flask
 
-from app.config import Config
+from app.config import DevelopmentConfig, config_by_name
 
 
 def create_app():
     app = Flask(__name__)
 
-    # loads the settings from our Config class into the Flask app
-    app.config.from_object(Config)
+    # look for FLASK_CONFIG in the environment
+    # if it does not exist, use development
+    config_name = os.environ.get("FLASK_CONFIG", "development")
+
+    # find the matching config class.
+    config_class = config_by_name.get(config_name, DevelopmentConfig)
+    app.config.from_object(config_class)
 
     from .main import bp
     app.register_blueprint(bp)
