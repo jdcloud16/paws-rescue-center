@@ -1,42 +1,51 @@
 from flask import abort, render_template
 
+from app.extensions import db
 from app.main import bp
-from app.main.data import PETS
+from app.models import Pet
 
 
 @bp.route("/")
 def homepage():
+    featured_pets = db.session.scalars(
+        db.select(Pet)
+        .where(Pet.is_available.is_(True))
+        .order_by(Pet.name)
+        .limit(2)
+    ).all()
+
     return render_template(
         "home.html",
         title="Paws Rescue Center",
-        featured_pets=PETS[:2],
+        featured_pets=featured_pets,
     )
 
 
 @bp.route("/pets")
 def pets_page():
+    pets = db.session.scalars(
+        db.select(Pet)
+        .where(Pet.is_available.is_(True))
+        .order_by(Pet.name)
+    ).all()
+
     return render_template(
         "pets.html",
         title="Available Pets",
-        pets=PETS,
+        pets=pets,
     )
 
 
 @bp.route("/pets/<int:pet_id>")
 def pet_details_page(pet_id):
-    pet = None
+    pet = db.session.get(Pet, pet_id)
 
-    for current_pet in PETS:
-        if current_pet["id"] == pet_id:
-            pet = current_pet
-            break
-
-    if pet is None:
+    if pet is None or not pet.is_available:
         abort(404)
 
     return render_template(
         "pet_details.html",
-        title=pet["name"],
+        title=pet.name,
         pet=pet,
     )
 
