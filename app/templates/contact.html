@@ -3,12 +3,30 @@
 {% block title %}{{ title }} | Paws Rescue Center{% endblock %}
 
 {% block content %}
-<h1>{{ title }}</h1>
-<p>You can reach Paws Rescue Center using the contact information below.</p>
-<ul>
-    <li>Phone: (555) 123-4567</li>
-    <li>Email: <a href="mailto:contact@pawsrescuecenter.org">contact@pawsrescuecenter.org</a></li>
-    <li>Hours: Monday-Saturday, 9:00 AM-5:00 PM</li>
-    <li>Address: 123 Main St, Anytown, USA</li>
-</ul>
+    <section class="page-header">
+        <h1>{{ title }}</h1>
+        <p>
+            Have a question about adoption, volunteering, or one of our available pets?
+            Reach out using the information below.
+        </p>
+    </section>
+
+    <section class="content-section contact-info">
+        <h2>Contact Information</h2>
+
+        <ul>
+            <li><strong>Phone:</strong> (555) 123-4567</li>
+            <li><strong>Email:</strong> contact@pawsrescuecenter.org</li>
+            <li><strong>Hours:</strong> Monday–Saturday, 9:00 AM–5:00 PM</li>
+            <li><strong>Location:</strong> 123 Rescue Lane, Springfield, USA</li>
+        </ul>
+    </section>
+
+    <section class="content-section">
+        <h2>Adoption Questions</h2>
+        <p>
+            If you are interested in adopting, please include the pet’s name in your
+            message so our team can help you faster.
+        </p>
+    </section>
 {% endblock %}

@@ -1,7 +1,46 @@
 {% extends "base.html" %}
 
-{% block title %}Paws Rescue Center{% endblock %}
+{% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-    <h1>Welcome to Paws Rescue Center :D</h1>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find a loving companion at Paws Rescue Center</h1>
+
+            <p>
+                We help rescued animals find safe, caring, and permanent homes.
+                Meet our available pets and take the first step toward adoption.
+            </p>
+
+            <a class="button" href="{{ url_for('main.pets_page') }}">
+                View Available Pets
+            </a>
+        </div>
+    </section>
+
+    <section class="featured-section">
+        <h2>Featured Pets</h2>
+
+        <div class="pet-grid">
+            {% for pet in featured_pets %}
+                <article class="pet-card">
+                    <h3>{{ pet.name }}</h3>
+
+                    <p>
+                        <strong>Species:</strong> {{ pet.species }}
+                    </p>
+
+                    <p>
+                        <strong>Breed:</strong> {{ pet.breed }}
+                    </p>
+
+                    <p>{{ pet.description }}</p>
+
+                    <a class="button" href="{{ url_for('main.pet_details_page', pet_id=pet.id) }}">
+                        Meet {{ pet.name }}
+                    </a>
+                </article>
+            {% endfor %}
+        </div>
+    </section>
 {% endblock %}

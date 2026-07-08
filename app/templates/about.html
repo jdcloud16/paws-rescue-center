@@ -3,6 +3,27 @@
 {% block title %}{{ title }} | Paws Rescue Center{% endblock %}
 
 {% block content %}
-    <h1>{{ title }}</h1>
-    <p>{{ description }}</p>
+    <section class="page-header">
+        <h1>{{ title }}</h1>
+        <p>{{ description }}</p>
+    </section>
+
+    <section class="content-section">
+        <h2>Our Mission</h2>
+        <p>
+            Paws Rescue Center exists to give rescued animals a safe place to heal,
+            grow, and find loving homes. We believe every animal deserves patience,
+            care, and a second chance.
+        </p>
+    </section>
+
+    <section class="content-section">
+        <h2>What We Do</h2>
+        <ul>
+            <li>Rescue animals from unsafe or uncertain situations</li>
+            <li>Provide food, shelter, and medical attention</li>
+            <li>Match pets with responsible adoptive families</li>
+            <li>Support adopters with guidance after adoption</li>
+        </ul>
+    </section>
 {% endblock %}

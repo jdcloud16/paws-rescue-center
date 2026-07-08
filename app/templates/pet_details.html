@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ pet.name }} | Paws Rescue Center{% endblock %}
+
+{% block content %}
+    <article class="pet-detail">
+        <h1>{{ pet.name }}</h1>
+
+        <p>
+            <strong>Species:</strong> {{ pet.species }}
+        </p>
+
+        <p>
+            <strong>Breed:</strong> {{ pet.breed }}
+        </p>
+
+        <p>
+            <strong>Age:</strong> {{ pet.age }}
+        </p>
+
+        <p>{{ pet.description }}</p>
+
+        <a class="button" href="{{ url_for('main.pets_page') }}">
+            Back to Available Pets
+        </a>
+    </article>
+{% endblock %}
