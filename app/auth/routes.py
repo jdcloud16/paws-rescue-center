@@ -1,4 +1,4 @@
-from flask import abort, flash, redirect, render_template, url_for
+from flask import abort, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app.auth import bp
@@ -123,4 +123,62 @@ def admin_pets_page():
         "auth/admin_pets.html",
         title="Manage Pets",
         pets=pets,
+    )
+
+
+@bp.route("/admin/pets/new", methods=["GET", "POST"])
+@login_required
+@admin_required
+def new_pet_page():
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        species = request.form.get("species", "").strip()
+        breed = request.form.get("breed", "").strip()
+        age_raw = request.form.get("age", "").strip()
+        is_available = "is_available" in request.form
+
+        if not name or not species or not breed or not age_raw:
+            flash("Please fill out all required fields.")
+            return render_template(
+                "auth/new_pet.html",
+                title="Add Pet",
+            )
+
+        try:
+            age = int(age_raw)
+        except ValueError:
+            flash("Age must be a number.")
+            return render_template(
+                "auth/new_pet.html",
+                title="Add Pet",
+            )
+
+        existing_pet = db.session.scalar(
+            db.select(Pet).filter_by(name=name)
+        )
+
+        if existing_pet:
+            flash("A pet with that name already exists.")
+            return render_template(
+                "auth/new_pet.html",
+                title="Add Pet",
+            )
+
+        pet = Pet(
+            name=name,
+            species=species,
+            breed=breed,
+            age=age,
+            is_available=is_available,
+        )
+
+        db.session.add(pet)
+        db.session.commit()
+
+        flash(f"{pet.name} has been added.")
+        return redirect(url_for("auth.admin_pets_page"))
+
+    return render_template(
+        "auth/new_pet.html",
+        title="Add Pet",
     )

@@ -219,3 +219,22 @@ a:hover {
 .data-table th {
     font-weight: bold;
 }
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 500px;
+}
+
+.form input {
+    padding: 0.6rem;
+    border: 1px solid #dddddd;
+    border-radius: 4px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
