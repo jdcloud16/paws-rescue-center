@@ -7,7 +7,7 @@
         <h1>{{ title }}</h1>
         <p>
             Have a question about adoption, volunteering, or one of our available pets?
-            Reach out using the information below.
+            Send us a message below.
         </p>
     </section>
 
@@ -23,10 +23,48 @@
     </section>
 
     <section class="content-section">
-        <h2>Adoption Questions</h2>
-        <p>
-            If you are interested in adopting, please include the pet’s name in your
-            message so our team can help you faster.
-        </p>
+        <h2>Send Us a Message</h2>
+
+        <form class="form-card" method="post">
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                {{ form.sender_name.label }}
+                {{ form.sender_name }}
+
+                {% for error in form.sender_name.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.email.label }}
+                {{ form.email }}
+
+                {% for error in form.email.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.subject.label }}
+                {{ form.subject }}
+
+                {% for error in form.subject.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.message.label }}
+                {{ form.message(rows="6") }}
+
+                {% for error in form.message.errors %}
+                    <p class="form-error">{{ error }}</p>
+                {% endfor %}
+            </div>
+
+            {{ form.submit(class="button") }}
+        </form>
     </section>
 {% endblock %}

@@ -38,3 +38,39 @@ class AdoptionApplicationForm(FlaskForm):
     )
 
     submit = SubmitField("Submit Application")
+
+class ContactForm(FlaskForm):
+    sender_name = StringField(
+        "Full Name",
+        validators=[
+            DataRequired(),
+            Length(max=120),
+        ],
+    )
+
+    email = StringField(
+        "Email",
+        validators=[
+            DataRequired(),
+            Email(),
+            Length(max=120),
+        ],
+    )
+
+    subject = StringField(
+        "Subject",
+        validators=[
+            DataRequired(),
+            Length(max=150),
+        ],
+    )
+
+    message = TextAreaField(
+        "Message",
+        validators=[
+            DataRequired(),
+            Length(min=10, max=1000),
+        ],
+    )
+
+    submit = SubmitField("Send Message")

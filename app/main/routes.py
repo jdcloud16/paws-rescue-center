@@ -1,9 +1,9 @@
 from flask import abort, flash, redirect, render_template, url_for
 
 from app.extensions import db
-from app.forms import AdoptionApplicationForm
 from app.main import bp
-from app.models import AdoptionApplication, Pet
+from app.forms import AdoptionApplicationForm, ContactForm
+from app.models import AdoptionApplication, ContactMessage, Pet
 
 
 @bp.route("/")
@@ -98,9 +98,30 @@ def about_page():
     )
 
 
-@bp.route("/contact")
+@bp.route("/contact", methods=["GET", "POST"])
 def contact_page():
+    form = ContactForm()
+
+    if form.validate_on_submit():
+        contact_message = ContactMessage(
+            sender_name=form.sender_name.data,
+            email=form.email.data,
+            subject=form.subject.data,
+            message=form.message.data,
+        )
+
+        db.session.add(contact_message)
+        db.session.commit()
+
+        flash(
+            "Your message has been sent. Our team will follow up soon.",
+            "success",
+        )
+
+        return redirect(url_for("main.contact_page"))
+
     return render_template(
         "contact.html",
         title="Contact Us",
+        form=form,
     )
