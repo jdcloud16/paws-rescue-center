@@ -1,7 +1,7 @@
 import click
 
 from app.extensions import db
-from app.models import Pet
+from app.models import Pet, User
 
 
 @click.command("init-db")
@@ -51,6 +51,34 @@ def seed_db_command():
     click.echo("Seed pet records added.")
 
 
+@click.command("create-admin")
+@click.option("--name", prompt=True)
+@click.option("--email", prompt=True)
+@click.password_option("--password")
+def create_admin_command(name, email, password):
+    """Create an admin user."""
+    existing_user = db.session.scalar(
+        db.select(User).where(User.email == email.lower())
+    )
+
+    if existing_user is not None:
+        click.echo("A user with that email already exists.")
+        return
+
+    user = User(
+        name=name,
+        email=email.lower(),
+        is_admin=True,
+    )
+    user.set_password(password)
+
+    db.session.add(user)
+    db.session.commit()
+
+    click.echo(f"Admin user created: {email.lower()}")
+
+
 def init_app(app):
     app.cli.add_command(init_db_command)
     app.cli.add_command(seed_db_command)
+    app.cli.add_command(create_admin_command)

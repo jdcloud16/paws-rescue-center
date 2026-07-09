@@ -33,7 +33,29 @@
                 <li>
                     <a href="{{ url_for('main.contact_page') }}">Contact</a>
                 </li>
-                
+
+                {% if current_user.is_authenticated %}
+                    <li>
+                        <a href="{{ url_for('auth.dashboard_page') }}">Dashboard</a>
+                    </li>
+
+                    {% if current_user.is_admin %}
+                        <li>
+                            <a href="{{ url_for('auth.admin_page') }}">Admin</a>
+                        </li>
+                    {% endif %}
+
+                    <li>
+                        <a href="{{ url_for('auth.logout_page') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li>
+                        <a href="{{ url_for('auth.login_page') }}">Login</a>
+                    </li>
+                    <li>
+                        <a href="{{ url_for('auth.register_page') }}">Register</a>
+                    </li>
+                {% endif %}
             </ul>
         </nav>
     </header>

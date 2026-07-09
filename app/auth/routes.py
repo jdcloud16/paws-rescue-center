@@ -1,10 +1,25 @@
-from flask import flash, redirect, render_template, url_for
+from flask import abort, flash, redirect, render_template, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 
 from app.auth import bp
 from app.extensions import db
 from app.forms import LoginForm, RegistrationForm
 from app.models import User
+from functools import wraps
+
+
+def admin_required(view_function):
+    @wraps(view_function)
+    def wrapped_view(**kwargs):
+        if not current_user.is_authenticated:
+            return login_required(view_function)(**kwargs)
+
+        if not current_user.is_admin:
+            abort(403)
+
+        return view_function(**kwargs)
+
+    return wrapped_view
 
 
 @bp.route("/register", methods=["GET", "POST"])
@@ -84,4 +99,13 @@ def dashboard_page():
     return render_template(
         "auth/dashboard.html",
         title="Dashboard",
+    )
+
+@bp.route("/admin")
+@login_required
+@admin_required
+def admin_page():
+    return render_template(
+        "auth/admin.html",
+        title="Admin",
     )
