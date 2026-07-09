@@ -243,3 +243,17 @@ a:hover {
     padding: 0.4rem 0.65rem;
     font-size: 0.9rem;
 }
+
+.inline-form {
+    display: inline;
+}
+
+.danger-button {
+    background-color: #b42318;
+    color: #ffffff;
+    border: none;
+}
+
+.danger-button:hover {
+    background-color: #8a1c13;
+}

@@ -250,3 +250,16 @@ def edit_pet_page(pet_id):
         title="Edit Pet",
         pet=pet,
     )
+
+@bp.route("/admin/pets/<int:pet_id>/delete", methods=["POST"])
+@login_required
+@admin_required
+def delete_pet_page(pet_id):
+    pet = db.get_or_404(Pet, pet_id)
+    pet_name = pet.name
+
+    db.session.delete(pet)
+    db.session.commit()
+
+    flash(f"{pet_name} has been deleted.")
+    return redirect(url_for("auth.admin_pets_page"))
