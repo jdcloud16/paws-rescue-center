@@ -238,3 +238,8 @@ a:hover {
     align-items: center;
     gap: 0.5rem;
 }
+
+.small-button {
+    padding: 0.4rem 0.65rem;
+    font-size: 0.9rem;
+}

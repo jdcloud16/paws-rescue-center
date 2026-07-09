@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | Paws Rescue Center{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <h1>{{ title }}</h1>
+        <p>Update this pet's adoption listing details.</p>
+    </section>
+
+    <section class="content-section">
+        <form class="form" method="POST">
+            <label for="name">Name</label>
+            <input id="name" name="name" type="text" value="{{ pet.name }}" required>
+
+            <label for="species">Species</label>
+            <input id="species" name="species" type="text" value="{{ pet.species }}" required>
+
+            <label for="breed">Breed</label>
+            <input id="breed" name="breed" type="text" value="{{ pet.breed }}" required>
+
+            <label for="age">Age</label>
+            <input id="age" name="age" type="number" min="0" value="{{ pet.age }}" required>
+
+            <label class="checkbox-label">
+                <input name="is_available" type="checkbox" {% if pet.is_available %}checked{% endif %}>
+                Available for adoption
+            </label>
+
+            <button class="button" type="submit">Save Changes</button>
+
+            <a href="{{ url_for('auth.admin_pets_page') }}">
+                Cancel
+            </a>
+        </form>
+    </section>
+{% endblock %}

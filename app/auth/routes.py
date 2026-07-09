@@ -182,3 +182,71 @@ def new_pet_page():
         "auth/new_pet.html",
         title="Add Pet",
     )
+
+@bp.route("/admin/pets/<int:pet_id>/edit", methods=["GET", "POST"])
+@login_required
+@admin_required
+def edit_pet_page(pet_id):
+    pet = db.get_or_404(Pet, pet_id)
+
+    if request.method == "POST":
+        name = request.form.get("name", "").strip()
+        species = request.form.get("species", "").strip()
+        breed = request.form.get("breed", "").strip()
+        age_raw = request.form.get("age", "").strip()
+        is_available = "is_available" in request.form
+
+        if not name or not species or not breed or not age_raw:
+            flash("Please fill out all required fields.")
+            return render_template(
+                "auth/edit_pet.html",
+                title="Edit Pet",
+                pet=pet,
+            )
+
+        try:
+            age = int(age_raw)
+        except ValueError:
+            flash("Age must be a number.")
+            return render_template(
+                "auth/edit_pet.html",
+                title="Edit Pet",
+                pet=pet,
+            )
+
+        if age < 0:
+            flash("Age cannot be negative.")
+            return render_template(
+                "auth/edit_pet.html",
+                title="Edit Pet",
+                pet=pet,
+            )
+
+        existing_pet = db.session.scalar(
+            db.select(Pet).filter_by(name=name)
+        )
+
+        if existing_pet and existing_pet.id != pet.id:
+            flash("Another pet with that name already exists.")
+            return render_template(
+                "auth/edit_pet.html",
+                title="Edit Pet",
+                pet=pet,
+            )
+
+        pet.name = name
+        pet.species = species
+        pet.breed = breed
+        pet.age = age
+        pet.is_available = is_available
+
+        db.session.commit()
+
+        flash(f"{pet.name} has been updated.")
+        return redirect(url_for("auth.admin_pets_page"))
+
+    return render_template(
+        "auth/edit_pet.html",
+        title="Edit Pet",
+        pet=pet,
+    )
