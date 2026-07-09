@@ -11,8 +11,11 @@
     <section class="content-section">
         <h2>Admin Tools</h2>
         <p>
-            Later, this area will allow staff to manage pets, adoption applications,
-            and contact messages.
+            Manage rescue center content, adoption applications, and contact messages.
         </p>
+
+        <a class="button" href="{{ url_for('auth.admin_pets_page') }}">
+            Manage Pets
+        </a>
     </section>
 {% endblock %}

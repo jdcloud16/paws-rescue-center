@@ -202,3 +202,20 @@ a:hover {
 .checkbox-group input {
     width: auto;
 }
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+
+.data-table th,
+.data-table td {
+    padding: 0.75rem;
+    border: 1px solid #dddddd;
+    text-align: left;
+}
+
+.data-table th {
+    font-weight: bold;
+}

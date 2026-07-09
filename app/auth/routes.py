@@ -4,7 +4,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from app.auth import bp
 from app.extensions import db
 from app.forms import LoginForm, RegistrationForm
-from app.models import User
+from app.models import Pet, User
 from functools import wraps
 
 
@@ -108,4 +108,19 @@ def admin_page():
     return render_template(
         "auth/admin.html",
         title="Admin",
+    )
+
+
+@bp.route("/admin/pets")
+@login_required
+@admin_required
+def admin_pets_page():
+    pets = db.session.scalars(
+        db.select(Pet).order_by(Pet.name)
+    ).all()
+
+    return render_template(
+        "auth/admin_pets.html",
+        title="Manage Pets",
+        pets=pets,
     )

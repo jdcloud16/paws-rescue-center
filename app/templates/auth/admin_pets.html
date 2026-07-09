@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | Paws Rescue Center{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <h1>{{ title }}</h1>
+        <p>View and manage pets listed by Paws Rescue Center.</p>
+    </section>
+
+    <section class="content-section">
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Species</th>
+                    <th>Breed</th>
+                    <th>Age</th>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pet in pets %}
+                    <tr>
+                        <td>{{ pet.name }}</td>
+                        <td>{{ pet.species }}</td>
+                        <td>{{ pet.breed }}</td>
+                        <td>{{ pet.age }}</td>
+                        <td>
+                            {% if pet.is_available %}
+                                Yes
+                            {% else %}
+                                No
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
