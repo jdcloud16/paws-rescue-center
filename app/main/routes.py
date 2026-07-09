@@ -1,8 +1,9 @@
-from flask import abort, render_template
+from flask import abort, flash, redirect, render_template, url_for
 
 from app.extensions import db
+from app.forms import AdoptionApplicationForm
 from app.main import bp
-from app.models import Pet
+from app.models import AdoptionApplication, Pet
 
 
 @bp.route("/")
@@ -47,6 +48,42 @@ def pet_details_page(pet_id):
         "pet_details.html",
         title=pet.name,
         pet=pet,
+    )
+
+
+@bp.route("/pets/<int:pet_id>/adopt", methods=["GET", "POST"])
+def adoption_application_page(pet_id):
+    pet = db.session.get(Pet, pet_id)
+
+    if pet is None or not pet.is_available:
+        abort(404)
+
+    form = AdoptionApplicationForm()
+
+    if form.validate_on_submit():
+        application = AdoptionApplication(
+            pet_id=pet.id,
+            applicant_name=form.applicant_name.data,
+            email=form.email.data,
+            phone=form.phone.data,
+            message=form.message.data,
+        )
+
+        db.session.add(application)
+        db.session.commit()
+
+        flash(
+            f"Your adoption application for {pet.name} has been submitted.",
+            "success",
+        )
+
+        return redirect(url_for("main.pet_details_page", pet_id=pet.id))
+
+    return render_template(
+        "adoption_application.html",
+        title=f"Adopt {pet.name}",
+        pet=pet,
+        form=form,
     )
 
 

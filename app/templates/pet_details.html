@@ -23,5 +23,9 @@
         <a class="button" href="{{ url_for('main.pets_page') }}">
             Back to Available Pets
         </a>
+        
+        <a class="button" href="{{ url_for('main.adoption_application_page', pet_id=pet.id) }}">
+            Apply to Adopt {{ pet.name }}
+        </a>
     </article>
 {% endblock %}
