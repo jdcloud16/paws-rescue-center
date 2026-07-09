@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}{{ title }} | Paws Rescue Center{% endblock %}
+
+{% block content %}
+    <section class="page-header">
+        <h1>Create Account</h1>
+        <p>Create an account to access protected features.</p>
+    </section>
+
+    <form class="form-card" method="post">
+        {{ form.hidden_tag() }}
+
+        <div class="form-group">
+            {{ form.name.label }}
+            {{ form.name }}
+
+            {% for error in form.name.errors %}
+                <p class="form-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.email.label }}
+            {{ form.email }}
+
+            {% for error in form.email.errors %}
+                <p class="form-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.password.label }}
+            {{ form.password }}
+
+            {% for error in form.password.errors %}
+                <p class="form-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        <div class="form-group">
+            {{ form.confirm_password.label }}
+            {{ form.confirm_password }}
+
+            {% for error in form.confirm_password.errors %}
+                <p class="form-error">{{ error }}</p>
+            {% endfor %}
+        </div>
+
+        {{ form.submit(class="button") }}
+    </form>
+{% endblock %}

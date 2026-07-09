@@ -192,3 +192,13 @@ a:hover {
 .flash-success {
     border-color: #2f855a;
 }
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.checkbox-group input {
+    width: auto;
+}

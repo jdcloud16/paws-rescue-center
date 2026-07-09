@@ -33,6 +33,7 @@
                 <li>
                     <a href="{{ url_for('main.contact_page') }}">Contact</a>
                 </li>
+                
             </ul>
         </nav>
     </header>
@@ -49,7 +50,7 @@
                 </div>
             {% endif %}
         {% endwith %}
-        
+
         {% block content %}{% endblock %}
     </main>
 
